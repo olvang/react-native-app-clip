@@ -7,12 +7,14 @@ export function getAppClipEntitlements(
     appleSignin,
     applePayMerchantIds,
     pushNotifications,
+    nfcScanning,
   }: {
     groupIdentifier?: string;
     appleSignin: boolean;
     applePayMerchantIds?: string[];
     pushNotifications: boolean;
-  },
+    nfcScanning: boolean;
+  }
 ) {
   const appBundleIdentifier = iosConfig?.bundleIdentifier;
 
@@ -43,12 +45,16 @@ export function getAppClipEntitlements(
       iosConfig.associatedDomains;
   }
 
+  if (nfcScanning) {
+    entitlements["com.apple.developer.nfc.readersession.formats"] = ["TAG"];
+  }
+
   return entitlements;
 }
 
 export function addApplicationGroupsEntitlement(
   entitlements: InfoPlist,
-  groupIdentifier?: string,
+  groupIdentifier?: string
 ) {
   if (groupIdentifier) {
     const existingApplicationGroups =

@@ -11,14 +11,22 @@ export const withEntitlements: ConfigPlugin<{
   appleSignin: boolean;
   applePayMerchantIds: string[];
   pushNotifications: boolean;
+  nfcScanning: boolean;
 }> = (
   config,
-  { targetName, groupIdentifier, appleSignin, applePayMerchantIds, pushNotifications },
+  {
+    targetName,
+    groupIdentifier,
+    appleSignin,
+    applePayMerchantIds,
+    pushNotifications,
+    nfcScanning,
+  }
 ) => {
   return withInfoPlist(config, (config) => {
     const targetPath = path.join(
       config.modRequest.platformProjectRoot,
-      targetName,
+      targetName
     );
     const filePath = path.join(targetPath, `${targetName}.entitlements`);
 
@@ -31,6 +39,7 @@ export const withEntitlements: ConfigPlugin<{
       appleSignin,
       applePayMerchantIds,
       pushNotifications,
+      nfcScanning,
     });
 
     fs.mkdirSync(path.dirname(filePath), { recursive: true });

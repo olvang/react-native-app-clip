@@ -7,9 +7,17 @@ export const withConfig: ConfigPlugin<{
   appleSignin: boolean;
   applePayMerchantIds: string[];
   pushNotifications: boolean;
+  nfcScanning: boolean;
 }> = (
   config,
-  { targetName, bundleIdentifier, appleSignin, applePayMerchantIds, pushNotifications },
+  {
+    targetName,
+    bundleIdentifier,
+    appleSignin,
+    applePayMerchantIds,
+    pushNotifications,
+    nfcScanning,
+  }
 ) => {
   let configIndex: null | number = null;
   config.extra?.eas?.build?.experimental?.ios?.appExtensions?.forEach(
@@ -17,7 +25,7 @@ export const withConfig: ConfigPlugin<{
       if (ext.targetName === targetName) {
         configIndex = index;
       }
-    },
+    }
   );
 
   if (!configIndex) {
@@ -58,6 +66,7 @@ export const withConfig: ConfigPlugin<{
         applePayMerchantIds,
         // groupIdentifier, // Throws an error in EAS
         pushNotifications,
+        nfcScanning,
       }),
     };
   }
